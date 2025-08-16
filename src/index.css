@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+@font-face {
+    font-family: 'Netflix Sans';
+    src: url('/fonts/NetflixSans-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Netflix Sans';
+    src: url('/fonts/NetflixSans-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Netflix Sans';
+    src: url('/fonts/NetflixSans-Medium.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Netflix Sans';
+    src: url('/fonts/NetflixSans-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Netflix Sans';
+}
+
+@theme {
+    --text-10: 10px;
+}
