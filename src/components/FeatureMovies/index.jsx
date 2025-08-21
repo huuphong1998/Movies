@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 const FeatureMovies = () => {
     const [movies, setMovies] = useState([]);
-    const [activeMovieId, setActiveMovieId] = useState();
+    const [activeMovieId, setActiveMovieId] = useState(null);
+    const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
         fetch('https://api.themoviedb.org/3/movie/popular', {
@@ -12,7 +13,7 @@ const FeatureMovies = () => {
             headers: {
                 accept: 'application/json',
                 Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDRiMDJjYzYzYzY2OTVhZGE5NGpmMGYzZjIyZjM3MSIsInN1YiI6IjY3NjA4ODNjMzhlY2QzYTZiNzZiYzBiYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8B90BWYv6IGJLKt713PDR0Wn309IgwEahjo1uOEUWSg',
+                    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NzE3ODRiMDJjYzYzY2VmYWY1MzQ5YTVhZGE5NGQzZiIsIm5iZiI6MTc1NTU3ODQ1Mi43OTYsInN1YiI6IjY4YTQwMDU0YzUwMGJmYTM3MTE3ZDI1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8B90BWYv6IGJLKt713PDR0Wn3Q9IgwEahjo1uQEUWSg',
             },
         })
             .then(res => res.json())
@@ -22,10 +23,26 @@ const FeatureMovies = () => {
                 setActiveMovieId(popularMovies[0].id);
             });
     }, []);
-    console.log(movies);
 
+    // Auto-slide effect
+    useEffect(() => {
+        if (movies.length === 0 || isPaused) return;
+
+        const interval = setInterval(() => {
+            setActiveMovieId(prevId => {
+                const currentIndex = movies.findIndex(movie => movie.id === prevId);
+                const nextIndex = (currentIndex + 1) % movies.length;
+                return movies[nextIndex].id;
+            });
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [movies, isPaused]);
     return (
-        <div className="relative text-white">
+        <div
+            className="relative text-white"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
             {movies
                 .filter(movie => movie.id === activeMovieId)
                 .map(movie => (
