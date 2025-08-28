@@ -1,3 +1,6 @@
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const Movie = ({ data }) => {
     if (!data) return null;
 
@@ -21,7 +24,9 @@ const Movie = ({ data }) => {
                     </div>
                 </div>
                 <div className="mt-4">
-                    <button className="text-10 mr-2 rounded bg-white px-4 py-2 text-black lg:text-lg">Trailer</button>
+                    <button className="text-10 mr-2 rounded bg-white px-4 py-2 text-black lg:text-lg">
+                        <FontAwesomeIcon icon={faPlay} /> Trailer
+                    </button>
                     <button className="text-10 rounded bg-white/35 px-4 py-2 lg:text-lg">View Detail</button>
                 </div>
             </div>
