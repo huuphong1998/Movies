@@ -1,28 +1,22 @@
 import PaginateIndicator from './PaginateIndicator';
 import Movie from './Movie';
 import { useEffect, useState } from 'react';
+import useFetch from '@hooks/useFetch';
 
 const FeatureMovies = () => {
-    const [movies, setMovies] = useState([]);
     const [activeMovieId, setActiveMovieId] = useState(null);
     const [isPaused, setIsPaused] = useState(false);
 
+    const { data: popularMoviesResponse } = useFetch({ url: '/movie/popular' });
+
+    const movies = (popularMoviesResponse.results || []).slice(0, 4);
+
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/movie/popular', {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NzE3ODRiMDJjYzYzY2VmYWY1MzQ5YTVhZGE5NGQzZiIsIm5iZiI6MTc1NTU3ODQ1Mi43OTYsInN1YiI6IjY4YTQwMDU0YzUwMGJmYTM3MTE3ZDI1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8B90BWYv6IGJLKt713PDR0Wn3Q9IgwEahjo1uQEUWSg',
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                const popularMovies = data.results.slice(0, 4);
-                setMovies(popularMovies);
-                setActiveMovieId(popularMovies[0].id);
-            });
-    }, []);
+        if (movies[0]?.id) {
+            setActiveMovieId(movies[0].id);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(movies)]);
 
     // Auto-slide effect
     useEffect(() => {
