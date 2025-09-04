@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CircularProgressBar from '../CircularProgressBar';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { groupBy } from 'lodash';
 import ImageComponent from '@components/Image';
+import { useModalContext } from '@context/ModalProvider';
+import CircularProgressBar from '@components/CircularProgressBar';
 
 const Banner = ({
     title,
@@ -14,7 +15,9 @@ const Banner = ({
     releaseDate,
     point = 0,
     overview,
+    trailerVideoKey,
 }) => {
+    const { openPopup } = useModalContext();
     if (!title) return null;
 
     const groupCrew = groupBy(crews, 'job');
@@ -48,7 +51,18 @@ const Banner = ({
                         <div className="flex items-center gap-2">
                             <CircularProgressBar percent={Math.round(point * 10)} size={3.5} strokeWidth={0.3} /> Rating
                         </div>
-                        <button>
+                        <button
+                            className="cursor-pointer"
+                            onClick={() => {
+                                openPopup(
+                                    <iframe
+                                        title="Trailer"
+                                        src={`https://www.youtube.com/embed/${trailerVideoKey}`}
+                                        className="aspect-video w-[50vw]"
+                                    />
+                                );
+                            }}
+                        >
                             <FontAwesomeIcon icon={faPlay} /> Trailer
                         </button>
                     </div>

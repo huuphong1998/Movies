@@ -11,7 +11,7 @@ const TVShowDetail = () => {
     const { id } = useParams();
 
     const { data: tvInfo, isLoading } = useFetch({
-        url: `/tv/${id}?append_to_response=content_ratings,aggregate_credits`,
+        url: `/tv/${id}?append_to_response=content_ratings,aggregate_credits,videos`,
     });
 
     const { data: recommandationResponse, isLoading: isRecommandationLoading } = useFetch({
@@ -46,6 +46,7 @@ const TVShowDetail = () => {
                 overview={tvInfo.overview}
                 certification={certification}
                 crews={crews}
+                trailerVideoKey={(tvInfo.videos?.results || []).find(video => video.type === 'Trailer')?.key}
             />
             <div className="bg-black text-[1.2vw] text-white">
                 <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10 sm:gap-8">

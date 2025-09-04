@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import MovieCard from '@components/MovieCard';
 import useFetch from '@hooks/useFetch';
+import { useSearchParams } from 'react-router-dom';
 
-const MediaList = ({ title, tabs }) => {
-    const [activeTabId, setActiveTabId] = useState(tabs[0]?.id);
+const MediaList = ({ title, tabs, queryKey }) => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const tabIds = tabs.map(tab => tab.id);
+    const queryValue = queryKey ? searchParams.get(queryKey) : null;
+    const initialTabId = tabIds.includes(queryValue) ? queryValue : tabs[0]?.id;
+
+    const [activeTabId, setActiveTabId] = useState(initialTabId);
 
     const url = tabs.find(tab => tab.id === activeTabId)?.url;
 
@@ -20,7 +27,14 @@ const MediaList = ({ title, tabs }) => {
                         <li
                             key={tab.id}
                             className={`cursor-pointer rounded px-2 py-1 ${tab.id === activeTabId ? 'bg-white text-black' : ''}`}
-                            onClick={() => setActiveTabId(tab.id)}
+                            onClick={() => {
+                                setActiveTabId(tab.id);
+                                if (queryKey) {
+                                    const next = new URLSearchParams(searchParams);
+                                    next.set(queryKey, tab.id);
+                                    setSearchParams(next);
+                                }
+                            }}
                         >
                             {tab.name}
                         </li>

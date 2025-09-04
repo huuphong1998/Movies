@@ -6,7 +6,7 @@ function HomePage() {
     return (
         <div>
             <FeatureMovies />
-            <MediaList title="Trending" tabs={TRENDING_TABS} />
+            <MediaList title="Trending" tabs={TRENDING_TABS} queryKey="Trending" />
             <MediaList title="Top Rated" tabs={TOP_RATED_TABS} />
         </div>
     );

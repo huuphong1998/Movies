@@ -10,7 +10,7 @@ const MovieDetail = () => {
     const { id } = useParams();
 
     const { data: movieInfo, isLoading } = useFetch({
-        url: `/movie/${id}?append_to_response=release_dates,credits`,
+        url: `/movie/${id}?append_to_response=release_dates,credits,videos`,
     });
 
     const { data: recommandationResponse, isLoading: isRelatedMoviesLoading } = useFetch({
@@ -43,6 +43,7 @@ const MovieDetail = () => {
                 overview={movieInfo.overview}
                 certification={certification}
                 crews={crews}
+                trailerVideoKey={(movieInfo.videos?.results || []).find(video => video.type === 'Trailer')?.key}
             />
             <div className="bg-black text-[1.2vw] text-white">
                 <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10 sm:gap-8">

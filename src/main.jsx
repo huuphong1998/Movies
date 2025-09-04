@@ -5,6 +5,7 @@ import TVShowDetail from '@pages/TVShowDetail';
 import RootLayout from '@pages/RootLayout';
 import HomePage from '@pages/HomePage';
 import MovieDetail from '@pages/MovieDetail';
+import ModalProvider from '@context/ModalProvider';
 
 const router = createBrowserRouter([
     {
@@ -26,4 +27,8 @@ const router = createBrowserRouter([
     },
 ]);
 
-createRoot(document.getElementById('root')).render(<RouterProvider router={router} />);
+createRoot(document.getElementById('root')).render(
+    <ModalProvider>
+        <RouterProvider router={router} />
+    </ModalProvider>
+);

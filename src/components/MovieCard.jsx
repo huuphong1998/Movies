@@ -12,7 +12,7 @@ const MovieCard = ({ id, title, releaseDate, poster, point, mediaType }) => {
                     </p>
                 )}
                 <ImageComponent
-                    className="w-full rounded-lg"
+                    className="aspect-[2/3] w-full rounded-lg object-cover"
                     src={`https://image.tmdb.org/t/p/w500${poster}`}
                     width={210}
                     height={300}
