@@ -15,7 +15,7 @@ const SeasonList = ({ seasons = [] }) => {
                     <div key={season.id} className="flex gap-4 rounded-lg border border-slate-200 p-3 shadow-md">
                         <ImageComponent
                             className="w-1/4 rounded-lg"
-                            src={`https://media.themoviedb.org/t/p/w300${season.poster_path}`}
+                            src={season.poster_path && `https://media.themoviedb.org/t/p/w300${season.poster_path}`}
                             width={130}
                             height={195}
                         />

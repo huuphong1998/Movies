@@ -49,7 +49,7 @@ const TVShowDetail = () => {
                 trailerVideoKey={(tvInfo.videos?.results || []).find(video => video.type === 'Trailer')?.key}
             />
             <div className="bg-black text-[1.2vw] text-white">
-                <div className="mx-auto flex max-w-screen-xl gap-6 px-6 py-10 sm:gap-8">
+                <div className="container">
                     <div className="flex-[2]">
                         <ActorList
                             actors={(tvInfo.aggregate_credits?.cast || []).map(cast => ({
@@ -59,7 +59,11 @@ const TVShowDetail = () => {
                             }))}
                         />
                         <SeasonList seasons={(tvInfo.seasons || []).reverse()} />
-                        <RelatedMediaList mediaList={relatedTVShow} isLoading={isRecommandationLoading} />
+                        <RelatedMediaList
+                            mediaList={relatedTVShow}
+                            isLoading={isRecommandationLoading}
+                            title="More like this"
+                        />
                     </div>
                     <div className="flex-1">
                         <TVShowInformation tvInfo={tvInfo} />
